@@ -70,7 +70,7 @@ module uart_tx
             begin
                tx_next = 1'b0;
                if (s_tick)
-                  if (s_reg==15)
+                  if (s_reg==(SB_TICK-1))
                      begin
                         state_next = data;
                         s_next = 0;
@@ -83,7 +83,7 @@ module uart_tx
             begin
                tx_next = b_reg[0];
                if (s_tick)
-                  if (s_reg==15)
+                  if (s_reg==(SB_TICK-1))
                      begin
                         s_next = 0;
                         b_next = b_reg >> 1;

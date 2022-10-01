@@ -26,7 +26,7 @@ module uart_rx
 
    // body
    // FSMD state & data registers
-   always @(posedge clk, posedge reset)
+   always @(posedge clk)
       if (reset)
          begin
             state_reg <= idle;
@@ -60,16 +60,16 @@ module uart_rx
          start:
             if (s_tick)
                if (s_reg==7)
-                  begin
-                     state_next = data;
-                     s_next = 0;
-                     n_next = 0;
-                  end
+               begin             
+                   state_next = ~rx ? data : idle;
+                   s_next = 0;
+                   n_next = 0;
+               end               
                else
                   s_next = s_reg + 1;
          data:
             if (s_tick)
-               if (s_reg==15)
+               if (s_reg==(SB_TICK-1))
                   begin
                      s_next = 0;
                      b_next = {rx, b_reg[7:1]};
@@ -85,7 +85,8 @@ module uart_rx
                if (s_reg==(SB_TICK-1))
                   begin
                      state_next = idle;
-                     rx_done_tick =1'b1;
+                     if(rx)
+                        rx_done_tick =1'b1;
                   end
                else
                   s_next = s_reg + 1;

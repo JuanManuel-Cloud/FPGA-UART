@@ -1,4 +1,3 @@
-// Listing 4.11
 module mod_m_counter
    #(
     parameter N=4, // number of bits in counter
@@ -16,7 +15,7 @@ module mod_m_counter
 
    // body
    // register
-   always @(posedge clk, posedge reset)
+   always @(posedge clk)
       if (reset)
          r_reg <= 0;
       else
@@ -24,8 +23,7 @@ module mod_m_counter
 
    // next-state logic
    assign r_next = (r_reg==(M-1)) ? 0 : r_reg + 1;
-   // output logic
-   assign q = r_reg;
    assign max_tick = (r_reg==(M-1)) ? 1'b1 : 1'b0;
 
+   assign q = r_reg;
 endmodule
