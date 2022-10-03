@@ -1,30 +1,49 @@
 // Listing 4.21
+`timescale 1ns / 1ps
+
 module fifo_test
    (
-    input wire clk, reset,
-    input wire [1:0] btn,
-    input wire [2:0] sw,
-    output wire [7:0] led
+    
    );
+    localparam BITS = 8;
+   
+   reg [BITS-1:0] sw_reg;
+   reg [1:0] btn_reg;
+   reg clk;
+   reg reset;
+   wire [BITS-1:0] led;
+   wire empty;
+   wire full;
 
-   // signal declaration
-   wire [1:0] db_btn;
-
-   // debounce circuit for btn[0]
-   debounce btn_db_unit0
-      (.clk(clk), .reset(reset), .sw(btn[0]),
-       .db_level(), .db_tick(db_btn[0]));
-   // debounce circuit for btn[1]
-   debounce btn_db_unit1
-      (.clk(clk), .reset(reset), .sw(btn[1]),
-       .db_level(), .db_tick(db_btn[1]));
-   // instantiate a 2^2-by-3 fifo
-   fifo #(.B(3), .W(2)) fifo_unit
+   
+   assign sw = sw_reg;
+   assign btn = btn_reg;
+   
+   fifo #(.B(BITS), .W(3)) fifo_unit
       (.clk(clk), .reset(reset),
-      .rd(db_btn[0]), .wr(db_btn[1]), .w_data(sw),
-      .r_data(led[2:0]), .full(led[7]), .empty(led[6]));
-   // disable unused leds
-   assign led[5:3] = 3'b000;
-
- endmodule
-
+      .rd(btn_reg[0]), .wr(btn_reg[1]), .w_data(sw_reg),
+      .r_data(led), .full(full), .empty(empty));
+      
+   integer i;
+   initial begin
+        clk = 1;
+        reset = 1;
+        #1
+        reset = 0;
+        sw_reg = 8'b11111111; // 255 representado en hexa de N bits
+        btn_reg = 2'b10;
+        for(i=0;i <2**fifo_unit.W; i=i+1)
+        begin
+            #2
+            sw_reg = sw_reg-1; // 255 representado en hexa de N bits
+        end
+        btn_reg = 2'b01;
+        #12
+        $finish;
+   end
+    
+    always begin
+        #1
+        clk = ~clk;
+    end
+endmodule
