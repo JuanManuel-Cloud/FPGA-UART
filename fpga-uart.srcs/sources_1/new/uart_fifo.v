@@ -31,7 +31,7 @@ module fifo
 
    // fifo control logic
    // register for read and write pointers
-   always @(posedge clk, posedge reset)
+   always @(posedge clk)
       if (reset)
          begin
             w_ptr_reg <= 0;
