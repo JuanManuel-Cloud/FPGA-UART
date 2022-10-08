@@ -24,7 +24,6 @@ module uart
    wire tx_empty, tx_fifo_not_empty;
    wire [7:0] tx_fifo_out, rx_data_out;
 
-   //body
    mod_m_counter #(.M(DVSR), .N(DVSR_BIT)) baud_gen_unit
       (.clk(clk), .reset(reset), .q(), .max_tick(tick));
 

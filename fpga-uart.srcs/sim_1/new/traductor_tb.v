@@ -44,17 +44,13 @@ module traductor_tb;
     
     //Outputs
     wire[BUS_SIZE - 1 : 0] o_led;
-    wire o_carry_bit;
-    wire o_zero_bit;
 
     // Verilog code for ALU
     top_alu_w_trasl test_unit(
             .i_clk(i_clk), 
             .i_reset(i_reset),        
             .i_data(i_data),  // ALU N-bit Inputs                 
-            .o_led(o_led), // ALU 8-bit Output
-            .o_carry_bit(o_carry_bit), // Carry Out Flag,
-            .o_zero_bit(o_zero_bit) // Zero Out Flag
+            .o_led(o_led) // ALU 8-bit Output
         );
 
     initial begin

@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 05.10.2022 20:58:05
+// Create Date: 08.10.2022 18:17:26
 // Design Name: 
-// Module Name: top_alu_w_trasl
+// Module Name: top
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,16 +20,16 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module top_alu_w_trasl#(
-        parameter BUS_OP_SIZE = 6,
+module top#(
         parameter BUS_SIZE = 8,
         parameter BUS_BIT_ENABLE = 2
     )(
         input i_clk,i_reset,
-        input [BUS_SIZE - 1 : 0] i_data,
-        output [BUS_SIZE - 1 : 0] o_led
+        input Rx,
+        output Tx
     );
-
+    wire [BUS_SIZE - 1 : 0] data_in_reg;
+    wire [BUS_SIZE - 1 : 0] data_out_reg;
     //Outputs
     wire [BUS_SIZE - 1 : 0] to_format;
     
@@ -43,7 +43,7 @@ module top_alu_w_trasl#(
             i_clk, i_reset,
             to_format,
             w_carry_bit, w_zero_bit,
-            o_led
+            data_out_reg
     );
     alu_top alu(
             i_clk,
@@ -57,8 +57,13 @@ module top_alu_w_trasl#(
     traductor_enable tra_en(
             i_clk,
             i_reset,
-            i_data,
+            data_in_reg,
             w_enable,
             to_switch
         );
+     uart uart_unit
+      (.clk(i_clk), .reset(i_reset), .rd_uart(1),
+       .wr_uart(1), .rx(Rx), .w_data(data_out_reg),
+       .tx_full(), .rx_empty(),
+       .r_data(data_in_reg), .tx(Tx));
 endmodule
