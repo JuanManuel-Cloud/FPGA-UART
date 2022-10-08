@@ -23,7 +23,7 @@
 module top_alu_w_trasl#(
         parameter BUS_OP_SIZE = 6,
         parameter BUS_SIZE = 8,
-        parameter BUS_BIT_ENABLE = 3
+        parameter BUS_BIT_ENABLE = 2
     )(
         input i_clk,i_reset,
         input [BUS_SIZE - 1 : 0] i_data,

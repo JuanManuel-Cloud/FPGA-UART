@@ -22,7 +22,7 @@
 
 module traductor_enable
       #(
-    parameter BUS_ENABLE=3, // number of bits in counter
+    parameter BUS_ENABLE=2, // number of bits in counter
               BUS_DATA=8 // mod-BUS_DATA
    )
    (
@@ -56,11 +56,11 @@ module traductor_enable
    always @(*)  
     begin    
         if(i_data=="A")     
-            r_enable_next = 3'b001;       
+            r_enable_next = #(BUS_ENABLE)'d0;       
         else if(i_data=="B")
-            r_enable_next = 3'b010;
+            r_enable_next = #(BUS_ENABLE)'d1;
         else if(i_data=="O")      
-            r_enable_next = 3'b100;      
+            r_enable_next = #(BUS_ENABLE)'d2;      
             
         r_data_next = i_data; 
    end
