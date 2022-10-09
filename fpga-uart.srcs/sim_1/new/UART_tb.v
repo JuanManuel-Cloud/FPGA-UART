@@ -136,6 +136,9 @@ module UART_tb;
         #DATA_TIME
         #DATA_TIME
         #DATA_TIME
+        #DATA_TIME
+        #DATA_TIME
+        #DATA_TIME
         $finish;
     end
     
