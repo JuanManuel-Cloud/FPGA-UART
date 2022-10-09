@@ -24,7 +24,7 @@ module UART_tb;
     parameter TICKS      = 16 ;
     parameter MOD_COUNT  = 163;
     parameter CLK_PERIOD = 20; //ns
-    parameter DATA_TIME  = TICKS * MOD_COUNT * CLK_PERIOD;
+    parameter DATA_TIME  = TICKS * MOD_COUNT * CLK_PERIOD*10;
 
     localparam BUS_OP_SIZE = 6;
     localparam BUS_SIZE = 8;   
@@ -45,6 +45,7 @@ module UART_tb;
 //Inputs
     reg i_clk;
     reg i_reset;
+    reg i_wr;
     
     //Outputs
     reg[BUS_SIZE - 1 : 0] in;
@@ -54,6 +55,7 @@ module UART_tb;
     top_tb test_unit(
             .i_clk(i_clk),
             .i_reset(i_reset),
+            .i_wr(i_wr),
             .Tx_data(in),
             .Rx_data(out)
         );
@@ -62,33 +64,77 @@ module UART_tb;
         i_reset = 1;
         #DATA_TIME
         i_reset = 0;
+        i_wr=1;
         in = "A";
+        #2
+        i_wr=0;
         #DATA_TIME
+        i_wr=1;
         in = I_DATA_A; // 255 representado en hexa de N bits
-        #DATA_TIME    
+        #2
+        i_wr=0;
+        #DATA_TIME 
+        i_wr=1;   
         in = "B";
+        #2
+        i_wr=0;
         #DATA_TIME
+        i_wr=1;
         in = I_DATA_B; // 2 representado en hexa de N bits;
+        #2
+        i_wr=0;
         #DATA_TIME
+        i_wr=1;
         in = "O";
+        #2
+        i_wr=0;
         #DATA_TIME
+        i_wr=1;
         in = I_OPERATION; // operaci?n 0 representada en un hexa de M bits
+        #2
+        i_wr=0;
         #DATA_TIME
+        i_wr=1;
         in = OP_ADD; // Addition
+        #2
+        i_wr=0;
         #DATA_TIME
+        i_wr=1;
         in = OP_SUB; // Subtraction
+        #2
+        i_wr=0;
         #DATA_TIME
+        i_wr=1;
         in = OP_AND; //  Logical and 
+        #2
+        i_wr=0;
         #DATA_TIME
+        i_wr=1;
         in = OP_OR; //  Logical or
+        #2
+        i_wr=0;
         #DATA_TIME
-        in = OP_XOR; //  Logical xor  
+        i_wr=1;
+        in = OP_XOR; //  Logical xor
+        #2
+        i_wr=0;  
         #DATA_TIME
+        i_wr=1;
         in = OP_SRA; // SRA 
+        #2
+        i_wr=0;
         #DATA_TIME
+        i_wr=1;
         in = OP_SRL; // SRL
+        #2
+        i_wr=0;
         #DATA_TIME
+        i_wr=1;
         in = OP_NOR; // Logical nor
+        #2
+        i_wr=0;
+        #DATA_TIME
+        #DATA_TIME
         #DATA_TIME
         $finish;
     end

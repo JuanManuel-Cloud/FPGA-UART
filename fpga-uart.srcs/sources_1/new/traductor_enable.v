@@ -26,10 +26,11 @@ module traductor_enable
               BUS_DATA=8 // mod-BUS_DATA
    )
    (
-    input wire clk, reset,
+    input wire clk, reset,i_empty,
     input wire [BUS_DATA-1:0] i_data,
     output wire [BUS_ENABLE-1:0] o_en,
-    output wire [BUS_DATA-1:0] o_data
+    output wire [BUS_DATA-1:0] o_data,
+    output wire o_rd
    );
 
    //signal declaration
@@ -37,6 +38,8 @@ module traductor_enable
    reg [BUS_DATA-1:0] r_data;
    reg [BUS_ENABLE-1:0] r_enable_next;
    reg [BUS_DATA-1:0] r_data_next;
+   
+   reg rd_reg;
 
    // body
    // register
@@ -45,12 +48,17 @@ module traductor_enable
       begin
          r_enable <= 3'd0;
          r_data <= 8'd0;
+         rd_reg <= 1'd0;
       end
       else
-      begin
-         r_enable <= r_enable_next;
-         r_data <= r_data_next;
-      end
+        if(~i_empty)
+        begin
+             rd_reg <= 1'd1;
+             r_enable <= r_enable_next;
+             r_data <= r_data_next;
+        end
+        else
+             rd_reg <= 1'd0;
 
    // next-state logic
    always @(*)  
@@ -67,4 +75,5 @@ module traductor_enable
 
    assign o_data = r_data;
    assign o_en = r_enable;
+   assign o_rd = rd_reg;
 endmodule

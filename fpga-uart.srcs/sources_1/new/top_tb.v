@@ -21,7 +21,7 @@
 
 
 module top_tb(
-        input i_clk,i_reset,
+        input i_clk,i_reset,i_wr,
         input [7:0]Tx_data,
         output [7:0]Rx_data
     );
@@ -36,7 +36,7 @@ module top_tb(
     );
     uart transmisor
       (.clk(i_clk), .reset(i_reset), .rd_uart(1),
-       .wr_uart(1), .rx(Rx), .w_data(Tx_data),
+       .wr_uart(i_wr), .rx(Rx), .w_data(Tx_data),
        .tx_full(), .rx_empty(),
        .r_data(), .tx(Tx_serial));
     uart receptor

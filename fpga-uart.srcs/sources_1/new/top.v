@@ -37,13 +37,18 @@ module top#(
     wire [BUS_SIZE - 1 : 0] to_switch;
     wire w_carry_bit;
     wire w_zero_bit;
+    wire w_wr;
+    wire w_full;
+    
+    wire w_rd;
+    wire w_empty;
 
     // Verilog code for ALU
     interfaz_alu_tx formater(
-            i_clk, i_reset,
+            i_clk, i_reset,w_full,
             to_format,
             w_carry_bit, w_zero_bit,
-            data_out_reg
+            data_out_reg,w_wr
     );
     alu_top alu(
             i_clk,
@@ -57,13 +62,15 @@ module top#(
     traductor_enable tra_en(
             i_clk,
             i_reset,
+            w_empty,
             data_in_reg,
             w_enable,
-            to_switch
+            to_switch,
+            w_rd
         );
      uart uart_unit
-      (.clk(i_clk), .reset(i_reset), .rd_uart(1),
-       .wr_uart(1), .rx(Rx), .w_data(data_out_reg),
-       .tx_full(), .rx_empty(),
+      (.clk(i_clk), .reset(i_reset), .rd_uart(w_rd),
+       .wr_uart(w_wr), .rx(Rx), .w_data(data_out_reg),
+       .tx_full(w_full), .rx_empty(w_empty),
        .r_data(data_in_reg), .tx(Tx));
 endmodule
