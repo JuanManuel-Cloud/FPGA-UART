@@ -34,7 +34,6 @@ module interfaz_alu_tx#(
    reg [BITS-1:0] flag_reg;
    reg [BITS-1:0] data_next_reg;
    reg [BITS-1:0] data_reg;
-   reg [1:0] count_validator;
    reg count,wr_reg;
    
    always@(posedge i_clk)
@@ -46,29 +45,16 @@ module interfaz_alu_tx#(
             count <= 1'b0;
             wr_reg <= 1'b0;
        end
-       else
-       begin
+       else      
            if(~i_full & wr_reg)
            begin
                 data_reg <= data_next_reg;
                 count <= count+1;   
-           end   
-       end
+           end          
    end
    
-   always@(posedge i_clk)
-   begin           
-       if(i_reset)
-            count_validator <= 2'b0;
-       else
-       begin        
-           if(count_validator>2)
-                wr_reg <= 1;  
-           else                 
-                wr_reg <= 0;
-           count_validator<=count_validator+1;  
-       end
-   end
+   always@(negedge i_clk)                                   
+        wr_reg <= ~wr_reg;                
    
    always@(*)
    begin
