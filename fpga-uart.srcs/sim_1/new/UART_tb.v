@@ -22,7 +22,7 @@
 
 module UART_tb;
     parameter TICKS      = 16 ;
-    parameter MOD_COUNT  = 163;
+    parameter MOD_COUNT  = 651;
     parameter CLK_PERIOD = 20; //ns
     parameter DATA_TIME  = TICKS * MOD_COUNT * CLK_PERIOD*10;
 

@@ -26,7 +26,8 @@ module top#(
     )(
         input i_clk,i_reset,
         input Rx,
-        output Tx
+        output Tx,
+        output [BUS_SIZE - 1 : 0] o_alu
     );
     wire [BUS_SIZE - 1 : 0] data_in_reg;
     wire [BUS_SIZE - 1 : 0] data_out_reg;
@@ -73,4 +74,6 @@ module top#(
        .wr_uart(w_wr), .rx(Rx), .w_data(data_out_reg),
        .tx_full(w_full), .rx_empty(w_empty),
        .r_data(data_in_reg), .tx(Tx));
+       
+       assign o_alu = to_format;
 endmodule

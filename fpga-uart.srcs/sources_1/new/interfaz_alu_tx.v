@@ -64,7 +64,7 @@ module interfaz_alu_tx#(
         if(~count)
             data_next_reg = i_data;
         else
-            data_next_reg = flag_reg;
+            data_next_reg = "\n";
    end
    
    assign o_data = data_reg;
