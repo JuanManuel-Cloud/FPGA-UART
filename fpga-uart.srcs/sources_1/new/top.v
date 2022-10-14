@@ -25,9 +25,11 @@ module top#(
         parameter BUS_BIT_ENABLE = 2
     )(
         input i_clk,i_reset,
+        input i_test,
         input Rx,
-        output Tx,
-        output [BUS_SIZE - 1 : 0] o_alu
+        output Tx,o_test,
+        output [BUS_SIZE - 1 : 0] o_alu,
+        output [BUS_BIT_ENABLE - 1 : 0] o_en
     );
     wire [BUS_SIZE - 1 : 0] data_in_reg;
     wire [BUS_SIZE - 1 : 0] data_out_reg;
@@ -76,4 +78,6 @@ module top#(
        .r_data(data_in_reg), .tx(Tx));
        
        assign o_alu = to_format;
+       assign o_test = i_test;
+       assign o_en = w_enable;
 endmodule

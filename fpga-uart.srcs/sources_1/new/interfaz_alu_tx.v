@@ -61,10 +61,9 @@ module interfaz_alu_tx#(
         flag_reg[0] = flag_carry;
         flag_reg[1] = flag_zero;  
         
-        if(~count)
-            data_next_reg = i_data;
-        else
-            data_next_reg = "\n";
+
+        data_next_reg = i_data;
+
    end
    
    assign o_data = data_reg;

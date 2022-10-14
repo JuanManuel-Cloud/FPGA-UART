@@ -2,7 +2,7 @@ import sys
 import serial
 
 try:
-    ser = serial.Serial('/dev/ttyUSB0', 115200)
+    ser = serial.Serial('/dev/ttyUSB0', 19200)
     ser.timeout = 5
 except:
     sys.stderr.write('An ERROR ocurred while trying open the serial port')
@@ -10,4 +10,5 @@ except:
     
 while True:
     str_input = input('Write data to be sent through the serial port')
-    ser.write(str_input.encode('ascii'))
+    writed = ser.write(str_input.encode('ascii'))
+    print(f'writed = {writed}')
