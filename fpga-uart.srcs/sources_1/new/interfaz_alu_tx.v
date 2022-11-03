@@ -31,7 +31,7 @@ module interfaz_alu_tx#(
     output wire o_wr
    );
    
-   reg [BITS-1:0] flag_reg;
+//   reg [BITS-1:0] flag_reg;
    reg [BITS-1:0] data_next_reg;
    reg [BITS-1:0] data_reg;
    reg count,wr_reg;
@@ -40,31 +40,36 @@ module interfaz_alu_tx#(
    begin           
        if(i_reset)
        begin
-            flag_reg <= 8'b0;
+//            flag_reg <= 8'b0;
             data_reg <= 8'b0;
             count <= 1'b0;
-            wr_reg <= 1'b0;
        end
-       else      
+       else 
            if(~i_full & wr_reg)
            begin
-                data_reg <= data_next_reg;
+                data_reg <= data_next_reg; 
                 count <= count+1;   
-           end          
+       end         
    end
    
-   always@(negedge i_clk)                                   
-        wr_reg <= ~wr_reg;                
+   always@(negedge i_clk)
+        if(i_reset)
+            wr_reg <= 1'b0;
+        else                                  
+            wr_reg <= ~wr_reg;                
    
    always@(*)
    begin
-        flag_reg[0] = flag_carry;
-        flag_reg[1] = flag_zero;  
+        // keep old values 
+        data_next_reg = data_reg;
+//        flag_reg[0] = flag_carry;
+//        flag_reg[1] = flag_zero;  
         
-        if(~count)
+        if(count)
             data_next_reg = i_data;
         else
             data_next_reg = "\n";
+
    end
    
    assign o_data = data_reg;

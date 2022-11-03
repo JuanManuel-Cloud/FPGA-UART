@@ -65,7 +65,7 @@ module UART_tb;
         #DATA_TIME
         i_reset = 0;
         i_wr=1;
-        in = "A";
+        in = 8'b01000001;
         #2
         i_wr=0;
         #DATA_TIME
@@ -75,7 +75,7 @@ module UART_tb;
         i_wr=0;
         #DATA_TIME 
         i_wr=1;   
-        in = "B";
+        in = 8'b01000010;
         #2
         i_wr=0;
         #DATA_TIME
@@ -85,7 +85,7 @@ module UART_tb;
         i_wr=0;
         #DATA_TIME
         i_wr=1;
-        in = "O";
+        in = 8'b01001111;
         #2
         i_wr=0;
         #DATA_TIME
