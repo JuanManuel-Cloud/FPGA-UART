@@ -78,9 +78,7 @@ module traductor_enable
         else if(i_data=="B")
             r_enable_next = #(BUS_ENABLE)'d1;
         else if(i_data=="O")      
-            r_enable_next = #(BUS_ENABLE)'d2;
-            
-//        r_data_next = i_data; 
+            r_enable_next = #(BUS_ENABLE)'d2;           
     end
    always @(*)
    begin
@@ -105,28 +103,7 @@ module traductor_enable
                     r_data_next = OP_NOR;
                 endcase
         else
-            case(i_data)
-                8'b00110001:
-                    r_data_next = 8'd1;
-                8'b00110010:
-                    r_data_next = 8'd2;
-                8'b00110011:
-                    r_data_next = 8'd3;
-                8'b00110100:
-                    r_data_next = 8'd4;
-                8'b00110101:
-                    r_data_next = 8'd5;
-                8'b00110110:
-                    r_data_next = 8'd6;
-                8'b00110111:
-                    r_data_next = 8'd7;
-                8'b00111000:
-                    r_data_next = 8'd8;
-                8'b00111001:
-                    r_data_next = 8'd9;
-                8'b00110000:
-                    r_data_next = 8'd0;
-                endcase    
+              r_data_next = i_data;  
    end     
 
 
