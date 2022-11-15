@@ -1,4 +1,4 @@
 [submodule "fpga-uart.srcs/sources_1/alu"]
 	path = fpga-uart.srcs/sources_1/alu
 	url = git@github.com:JuanManuel-Cloud/FPGA-ALU.git
-	branch = fran
+	branch = tp2
